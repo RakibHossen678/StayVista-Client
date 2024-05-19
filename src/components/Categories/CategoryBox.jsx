@@ -1,10 +1,19 @@
 import PropTypes from "prop-types";
-
+import queryString from 'query-string';
 const CategoryBox = ({ label, icon: Icon }) => {
+  const handleClick=()=>{
+    let currentQuery={category:label}
+    const url=queryString.stringify({
+      url:'/',
+      query:currentQuery
+    })
+  }
+  
   return (
     <div
-      className={`flex 
-  flex-col 
+    onClick={handleClick}
+      className={`flex
+      flex-col 
   items-center 
   justify-center 
   gap-2
