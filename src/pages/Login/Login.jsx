@@ -1,12 +1,17 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { signInWithGoogle, loading, setLoading, signIn } = useAuth();
+  const location=useLocation()
+  const from=location?.state || '/'
+  const [email, setEmail] = useState("");
+  const { signInWithGoogle, loading, setLoading, signIn, resetPassword } =
+    useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -15,21 +20,34 @@ const Login = () => {
     try {
       setLoading(true);
 
-      const result = await signIn(email, password);
-      console.log(result);
+      await signIn(email, password);
 
-      navigate("/");
+      navigate(from);
       toast.success("SingUp successful");
     } catch (err) {
       console.log(err);
       toast.error(err.message);
+      setLoading(false);
+    }
+  };
+  const handleResetPassword = async () => {
+    if (!email) return toast.error("Please write your email");
+    try {
+      console.log(email);
+      await resetPassword(email);
+      toast.success("Request success! check your mail for further");
+      setLoading(false)
+    } catch (err) {
+      console.log(err.message);
+      toast.error(err.message);
+      setLoading(false);
     }
   };
   const handleGoogleSingIn = async () => {
     try {
       setLoading(true);
       await signInWithGoogle();
-      navigate("/");
+      navigate(from);
       toast.success("SingUp successful");
     } catch (err) {
       console.log(err);
@@ -47,8 +65,6 @@ const Login = () => {
         </div>
         <form
           onSubmit={handleSubmit}
-          noValidate=""
-          action=""
           className="space-y-6 ng-untouched ng-pristine ng-valid"
         >
           <div className="space-y-4">
@@ -57,6 +73,7 @@ const Login = () => {
                 Email address
               </label>
               <input
+                onBlur={(e) => setEmail(e.target.value)}
                 type="email"
                 name="email"
                 id="email"
@@ -99,7 +116,10 @@ const Login = () => {
           </div>
         </form>
         <div className="space-y-1">
-          <button className="text-xs hover:underline hover:text-rose-500 text-gray-400">
+          <button
+            onClick={handleResetPassword}
+            className="text-xs hover:underline hover:text-rose-500 text-gray-400"
+          >
             Forgot password?
           </button>
         </div>
@@ -119,7 +139,7 @@ const Login = () => {
           <p>Continue with Google</p>
         </button>
         <p className="px-6 text-sm text-center text-gray-400">
-          Don&apos;t have an account yet?{" "}
+          Don&apos;t have an account yet?
           <Link
             to="/signup"
             className="hover:underline hover:text-rose-500 text-gray-600"
