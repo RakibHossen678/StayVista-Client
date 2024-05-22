@@ -1,7 +1,7 @@
 
 import { categories } from "../Categories/CategoriesData";
 import { DateRange } from "react-date-range";
-const AddRoomForm = ({dates,handelDates,handleSubmit}) => {
+const AddRoomForm = ({dates,handelDates,handleSubmit,setImagePreview,imagePreview,handleImage,imageText}) => {
   
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
@@ -67,11 +67,14 @@ const AddRoomForm = ({dates,handelDates,handleSubmit}) => {
               />
             </div>
 
-            <div className=" p-4 bg-white w-full  m-auto rounded-lg">
-              <div className="file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg">
-                <div className="flex flex-col w-max mx-auto text-center">
+            <div className=" p-4 bg-white w-full  m-auto rounded-lg flex justify-between items-center">
+              <div className="file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg ">
+                <div className="flex flex-col w-max mx-auto text-center ">
                   <label>
                     <input
+                    onChange={(e)=>{
+                      handleImage(e.target.files[0])
+                    }}
                       className="text-sm cursor-pointer w-36 hidden"
                       type="file"
                       name="image"
@@ -80,11 +83,14 @@ const AddRoomForm = ({dates,handelDates,handleSubmit}) => {
                       hidden
                     />
                     <div className="bg-rose-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-rose-500">
-                      Upload Image
+                     {imageText}
                     </div>
                   </label>
                 </div>
               </div>
+                <div>
+                {imagePreview && <img className="h-12 w-14 object-cover" src={imagePreview}/>}
+                </div>
             </div>
             <div className="flex justify-between gap-2">
               <div className="space-y-1 text-sm">
