@@ -11,7 +11,7 @@ import { Fragment } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../Form/CheckoutForm";
-const stripePromise = loadStripe(import.meta.VITE_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 const BookingModal = ({ closeModal, isOpen, bookingInfo }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -75,23 +75,9 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo }) => {
                 </div>
                 <hr className="mt-8 " />
                 <Elements stripe={stripePromise}>
-                  <CheckoutForm></CheckoutForm>
+                  <CheckoutForm bookingInfo={bookingInfo} closeModal={closeModal}></CheckoutForm>
                 </Elements>
-                <div className="flex mt-2 justify-around">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                  >
-                    Book
-                  </button>
-                  <button
-                    onClick={closeModal}
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                  >
-                    NO
-                  </button>
-                </div>
+                
               </DialogPanel>
             </TransitionChild>
           </div>

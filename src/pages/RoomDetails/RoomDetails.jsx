@@ -9,7 +9,6 @@ import useAxiosCommon from '../../hooks/useAxiosCommon'
 
 const RoomDetails = () => {
   const {id}=useParams()
-  console.log(id)
   const axiosCommon = useAxiosCommon();
   const { data: room = {}, isLoading } = useQuery({
     queryKey: ["room",id],
