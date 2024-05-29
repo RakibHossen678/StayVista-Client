@@ -12,6 +12,10 @@ import AddRoom from "../pages/Dashboard/Host/AddRoom";
 import MyListings from "../pages/Dashboard/Host/MyListings";
 import Profile from "../pages/Dashboard/Common/Profile";
 import ManageUsers from "../pages/Dashboard/Admin/MangeUsers";
+import AdminRoute from "./AdminRoute";
+import HostRoute from "./HostRoute";
+import MyBookings from "../pages/Dashboard/Guest/MyBooking";
+import ManageBookings from "../pages/Dashboard/Host/ManageBookings";
 
 export const router = createBrowserRouter([
   {
@@ -51,7 +55,9 @@ export const router = createBrowserRouter([
         path: "add-room",
         element: (
           <PrivateRoute>
-            <AddRoom></AddRoom>
+            <HostRoute>
+              <AddRoom></AddRoom>
+            </HostRoute>
           </PrivateRoute>
         ),
       },
@@ -59,7 +65,9 @@ export const router = createBrowserRouter([
         path: "my-listings",
         element: (
           <PrivateRoute>
-            <MyListings></MyListings>
+            <HostRoute>
+              <MyListings></MyListings>
+            </HostRoute>
           </PrivateRoute>
         ),
       },
@@ -67,7 +75,9 @@ export const router = createBrowserRouter([
         path: "manage-users",
         element: (
           <PrivateRoute>
-            <ManageUsers></ManageUsers>
+            <AdminRoute>
+              <ManageUsers></ManageUsers>
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -76,6 +86,24 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Profile></Profile>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-bookings",
+        element: (
+          <PrivateRoute>
+            <MyBookings></MyBookings>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-bookings",
+        element: (
+          <PrivateRoute>
+            <HostRoute>
+              <ManageBookings></ManageBookings>
+            </HostRoute>
           </PrivateRoute>
         ),
       },
