@@ -1,10 +1,9 @@
+import useRoles from "../../../hooks/useRoles";
+import AdminStatistics from "../Admin/AdminStatatistics";
+
 const Statistics = () => {
-  return (
-    <div>
-      <h1>Welcome to statistics</h1>
-      
-    </div>
-  );
+  const [role, isLoading] = useRoles();
+  return <div>{role === "admin" && <AdminStatistics></AdminStatistics>}</div>;
 };
 
 export default Statistics;
